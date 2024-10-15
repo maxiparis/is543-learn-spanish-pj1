@@ -15,7 +15,7 @@ struct TopicsView: View {
         NavigationStack {
             List(topicsVM.topics) { topic in
                 NavigationLink {
-                    
+                    TopicIntroView(topic: topic)
                 } label: {
                     Text("\(topic.emoji) \(topic.title)")
                 }
