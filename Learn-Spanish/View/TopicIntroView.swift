@@ -11,16 +11,17 @@ struct TopicIntroView: View {
     var topic: Topic
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Text("Lesson")
-                    .font(.title)
-                Spacer()
-            }
+        VStack {
+            Spacer()
+            Text("Short Lesson")
+                .font(.title)
+            Text("\(topic.lessonDescription)")
+                .padding()
+            Spacer()
         }.navigationTitle(topic.title)
     }
 }
 
 #Preview {
-    TopicIntroView(topic: Topic(title: "Travel", emoji: "✈️", isCompleted: false))
+    TopicIntroView(topic: Topic(title: "Hobbies", emoji: "🎸", isCompleted: false, lessonDescription: "Learn to talk about your hobbies in Spanish. Words like 'Leer' (Reading), 'Cantar' (Singing), and 'Correr' (Running) will help you share your favorite pastimes."))
 }
