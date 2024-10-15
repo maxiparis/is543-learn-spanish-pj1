@@ -13,13 +13,16 @@ struct TopicsView: View {
     
     var body: some View {
         NavigationStack {
-            List(topicsVM.topics) { topic in
-                NavigationLink {
-                    TopicIntroView(topic: topic)
-                } label: {
-                    Text("\(topic.emoji) \(topic.title)")
+            List {
+                Section(header: Text("Choose a topic to learn about it")) {
+                    ForEach(topicsVM.topics) { topic in
+                        NavigationLink {
+                            TopicIntroView(topic: topic)
+                        } label: {
+                            Text("\(topic.emoji) \(topic.title)")
+                        }
+                    }
                 }
-
             }.navigationTitle("Learn Spanish")
         }
     }
