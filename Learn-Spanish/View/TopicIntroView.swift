@@ -9,16 +9,25 @@ import SwiftUI
 
 struct TopicIntroView: View {
     var topic: Topic
-    
+    @State private var isCompleted: Bool = false
+
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Short Lesson")
-                .font(.title)
-            Text("\(topic.lessonDescription)")
-                .padding()
-            Spacer()
-        }.navigationTitle(topic.title)
+        Form {
+            Section(header: Text("Short Lesson")
+                .font(.title3)
+                .fontWeight(.bold)
+            )
+            {
+                Text("\(topic.lessonDescription)")
+                Toggle(isOn: $isCompleted) {
+                    Text("I've completed this lesson")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                
+            }
+        }
+        .navigationTitle(topic.title)
     }
 }
 
