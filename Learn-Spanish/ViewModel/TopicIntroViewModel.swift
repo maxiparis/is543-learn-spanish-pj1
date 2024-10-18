@@ -30,6 +30,10 @@ import Foundation
         model.topic.lessonDescription
     }
     
+    var lessons: [Topic.Lesson] {
+        model.topic.lessons
+    }
+    
     //MARK: - Initializer
 
     init(topic: Topic) {

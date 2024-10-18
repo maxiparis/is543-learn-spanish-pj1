@@ -15,7 +15,6 @@ struct TopicIntroBrain {
     var persistenceManager = PersistenceManager.shared
     
     //MARK: - Data Access
-
     
     
     //MARK: - Business Logic

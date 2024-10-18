@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct Topic: Identifiable, Encodable, Decodable {
+struct Topic: Identifiable, Codable {
 
     var id: UUID = UUID()
     var title: String
     var emoji: String
     var isShortLessonCompleted: Bool
     var lessonDescription: String
+    var lessons: [Lesson]
+    
+    struct Lesson: Identifiable, Codable {
+        var id: UUID = UUID()
+        let phraseInEnglish: String
+        let phraseInSpanish: String
+    }
 }
