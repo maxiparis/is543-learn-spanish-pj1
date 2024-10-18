@@ -49,5 +49,18 @@ class PersistenceManager {
         defaults.set(true, forKey: keys.hasDataBeenSaved)
     }
     
+    func updateTopic(_ topic: Topic) {
+        var topics: [Topic] = loadTopicsArray() ?? []
+        
+        for (index, currentTopic) in topics.enumerated() {
+            if currentTopic.id == topic.id {
+                topics[index] = topic
+                break
+            }
+        }
+        
+        saveTopicsArray(topics)
+    }
+    
 }
 

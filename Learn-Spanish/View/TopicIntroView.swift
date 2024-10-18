@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct TopicIntroView: View {
-    var topic: Topic
-    @State private var isCompleted: Bool = false
-
+    
+    @State var topicIntroVM : TopicIntroViewModel
+    
     var body: some View {
         Form {
             Section(header: Text("Short Lesson")
@@ -18,8 +18,8 @@ struct TopicIntroView: View {
                 .fontWeight(.bold)
             )
             {
-                Text("\(topic.lessonDescription)")
-                Toggle(isOn: $isCompleted) {
+                Text("\(topicIntroVM.lessonDescription)")
+                Toggle(isOn: $topicIntroVM.isCompleted) {
                     Text("I've completed this lesson")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -27,10 +27,20 @@ struct TopicIntroView: View {
                 
             }
         }
-        .navigationTitle(topic.title)
+        .navigationTitle(topicIntroVM.title)
     }
 }
 
 #Preview {
-    TopicIntroView(topic: Topic(title: "Hobbies", emoji: "🎸", isCompleted: false, lessonDescription: "Learn to talk about your hobbies in Spanish. Words like 'Leer' (Reading), 'Cantar' (Singing), and 'Correr' (Running) will help you share your favorite pastimes."))
+    TopicIntroView(
+        topicIntroVM: TopicIntroViewModel(
+            topic:
+                Topic(
+                    title: "Hobbies",
+                    emoji: "🎸",
+                    isShortLessonCompleted: false,
+                    lessonDescription: "Learn to talk about your hobbies in Spanish. Words like 'Leer' (Reading), 'Cantar' (Singing), and 'Correr' (Running) will help you share your favorite pastimes."
+                )
+        )
+    )
 }

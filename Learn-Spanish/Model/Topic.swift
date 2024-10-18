@@ -8,9 +8,10 @@
 import Foundation
 
 struct Topic: Identifiable, Encodable, Decodable {
+
     var id: UUID = UUID()
     var title: String
     var emoji: String
-    var isCompleted: Bool
+    var isShortLessonCompleted: Bool
     var lessonDescription: String
 }

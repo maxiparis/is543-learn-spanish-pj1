@@ -17,7 +17,7 @@ struct TopicsView: View {
                 Section(header: Text("Choose a topic to learn about it")) {
                     ForEach(topicsVM.topics) { topic in
                         NavigationLink {
-                            TopicIntroView(topic: topic)
+                            TopicIntroView(topicIntroVM: TopicIntroViewModel(topic: topic))
                         } label: {
                             Text("\(topic.emoji) \(topic.title)")
                         }
