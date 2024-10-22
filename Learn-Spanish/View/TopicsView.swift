@@ -23,6 +23,10 @@ struct TopicsView: View {
                         }
                     }
                 }
+                
+                Button("Restart data") {
+                    topicsVM.resaveDataToDefaults()
+                }
             }.navigationTitle("Learn Spanish")
         }
     }

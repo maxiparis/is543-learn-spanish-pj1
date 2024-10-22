@@ -33,7 +33,7 @@ struct TopicIntroView: View {
         {
             Text("\(topicIntroVM.lessonDescription)")
             Toggle(isOn: $topicIntroVM.isCompleted) {
-                Text("I've completed this lesson")
+                Text("I've read this lesson")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -44,11 +44,18 @@ struct TopicIntroView: View {
     
     var startPracticeButton: some View {
         Section(header: Text("Practice makes perfect")) {
-            Button {
-                //TODO
-                print("Start Practice tapped.")
+            NavigationLink {
+                PracticeView()
             } label: {
                 Label("Start Practice", systemImage: "book")
+            }
+            
+            HStack {
+                Text("Progress")
+                Spacer()
+                Text("[30%]")
+                    .foregroundStyle(.secondary)
+                //TODO: progress
             }
         }
     }
@@ -57,11 +64,18 @@ struct TopicIntroView: View {
     
     var startQuizButton: some View {
         Section(header: Text("Are you ready for a challenge?")) {
-            Button {
-                //TODO
-                print("Start Quiz tapped.")
+            NavigationLink {
+                QuizView()
             } label: {
                 Label("Start Quiz", systemImage: "applepencil.and.scribble")
+            }
+            
+            HStack {
+                Text("Progress")
+                Spacer()
+                Text("[30%]")
+                    .foregroundStyle(.secondary)
+                //TODO: progress
             }
         }
     }
