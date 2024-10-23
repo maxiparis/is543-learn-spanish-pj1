@@ -32,7 +32,7 @@ struct TopicIntroView: View {
         )
         {
             Text("\(topicIntroVM.lessonDescription)")
-            Toggle(isOn: $topicIntroVM.isCompleted) {
+            Toggle(isOn: $topicIntroVM.isLessonCompleted) {
                 Text("I've read this lesson")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -50,12 +50,10 @@ struct TopicIntroView: View {
                 Label("Start Practice", systemImage: "book")
             }
             
-            HStack {
-                Text("Progress")
-                Spacer()
-                Text("[30%]")
+            Toggle(isOn: $topicIntroVM.isPracticeCompleted) {
+                Text("Completed the practice")
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
-                //TODO: progress
             }
         }
     }
@@ -99,7 +97,7 @@ struct TopicIntroView: View {
     TopicIntroView(
         topicIntroVM: TopicIntroViewModel(
             topic:
-                Topic(title: "Basic", emoji: "⭐️", isShortLessonCompleted: false, lessonDescription: "Start with the basics! In Spanish, 'Hola' means 'Hello,' and 'Adiós' means 'Goodbye.'",
+                Topic(title: "Basic", emoji: "⭐️", isShortLessonCompleted: false, isPracticeCompleted: false, lessonDescription: "Start with the basics! In Spanish, 'Hola' means 'Hello,' and 'Adiós' means 'Goodbye.'",
                       lessons: [
                         Topic.Lesson(phraseInEnglish: "Hello", phraseInSpanish: "Hola"),
                         Topic.Lesson(phraseInEnglish: "Goodbye", phraseInSpanish: "Adiós"),

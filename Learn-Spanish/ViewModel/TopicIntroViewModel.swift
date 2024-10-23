@@ -13,12 +13,20 @@ import Foundation
     
     private var model: TopicIntroBrain
     
-    var isCompleted: Bool {
+    var isLessonCompleted: Bool {
         get {
             model.topic.isShortLessonCompleted
         }
         set {
             setShortLessonCompleted(newValue)
+        }
+    }
+    var isPracticeCompleted: Bool {
+        get {
+            model.topic.isPracticeCompleted
+        }
+        set {
+            setPracticeCompleted(newValue)
         }
     }
     
@@ -46,6 +54,9 @@ import Foundation
         model.setShortLessonCompleted(isCompleted)
     }
     
+    func setPracticeCompleted(_ isCompleted: Bool) {
+        model.setPracticeCompleted(isCompleted)
+    }
     //MARK: - Helpers
 
 }

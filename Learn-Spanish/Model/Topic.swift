@@ -12,7 +12,8 @@ struct Topic: Identifiable, Codable {
     var id: UUID = UUID()
     var title: String
     var emoji: String
-    var isShortLessonCompleted: Bool
+    var isShortLessonCompleted: Bool = false
+    var isPracticeCompleted: Bool = false
     var lessonDescription: String
     var lessons: [Lesson]
     

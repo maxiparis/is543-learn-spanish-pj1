@@ -23,6 +23,11 @@ struct TopicIntroBrain {
         topic.isShortLessonCompleted = isCompleted
         persistenceManager.updateTopic(topic)
     }
+    
+    mutating func setPracticeCompleted(_ isCompleted: Bool) {
+        topic.isPracticeCompleted = isCompleted
+        persistenceManager.updateTopic(topic)
+    }
 
     
 }
