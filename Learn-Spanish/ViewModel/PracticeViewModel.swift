@@ -8,13 +8,16 @@
 import Foundation
 
 @Observable class PracticeViewModel {
+    
+    //MARK: - Properties
+
     var lessons: [Lesson]
     var selectedLesson = 0
 
-    
-    
+    //MARK: - Init
+
     init(lessons: [Lesson]) {
-        self.lessons = lessons
+        self.lessons = lessons.shuffled()
     }
     
     //MARK: - User Intents

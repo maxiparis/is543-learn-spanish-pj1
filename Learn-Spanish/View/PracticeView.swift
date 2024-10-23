@@ -39,7 +39,7 @@ struct PracticeView: View {
         ProgressView(value: Double(practiceVM.selectedLesson), total: Double(practiceVM.lessons.count-1)) {
             Text("Progress")
         } currentValueLabel: {
-            Text("\(practiceVM.selectedLesson)/\(practiceVM.lessons.count-1)")
+            Text("\(practiceVM.selectedLesson + 1)/\(practiceVM.lessons.count)")
         }
             .padding()
             .progressViewStyle(.linear)
@@ -88,19 +88,29 @@ struct PracticeView: View {
             .buttonStyle(.bordered)
         }
     }
-    
 }
 
 //MARK: - CardView
 
 struct CardView: View {
     var lesson: Lesson
+    @State var showingEnglish: Bool = true
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(.secondary)
-            
+                .foregroundColor( showingEnglish ? .blue.opacity(0.5) : .green.opacity(0.5))
+            if showingEnglish {
+                Text(lesson.phraseInEnglish)
+            } else {
+                Text(lesson.phraseInSpanish)
+            }
+
+        }
+        .onTapGesture {
+            withAnimation() {
+                showingEnglish.toggle()
+            }
         }
     }
 }
