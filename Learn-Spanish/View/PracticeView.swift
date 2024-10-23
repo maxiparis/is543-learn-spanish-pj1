@@ -8,57 +8,90 @@
 import SwiftUI
 
 struct PracticeView: View {
-    @State var practiceVM : PracticeViewModel //pass the topic from the previous view
-    @State private var selectedLesson = 0
     
+    //MARK: - Variables
+
+    @State var practiceVM : PracticeViewModel
+    
+    //MARK: - Body view
+
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 20) {
                 
                 Spacer()
                 
-                ProgressView(value: Double(selectedLesson), total: Double(practiceVM.lessons.count-1)) {
-                    Text("Progress")
-                } currentValueLabel: {
-                    Text("\(selectedLesson)/\(practiceVM.lessons.count-1)")
-                }
-                    .padding()
-                    .progressViewStyle(.linear)
+                progressView
                 
-                Spacer()
+                swippeableCards(geometry: geometry)
                 
-                TabView(selection: $selectedLesson) {
-                    ForEach(practiceVM.lessons.indices) { lessonIndex in
-                        CardView(lesson: practiceVM.lessons[lessonIndex])
-                            .tag(lessonIndex)
-                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
-                    }
-                }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(height: geometry.size.height * 0.6)
-                .padding()
+                controlButtons
                 
-                
-                Spacer()
-                HStack {
-                    Button("Previous") {
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            selectedLesson = max(selectedLesson - 1, 0)
-                        }
-                    }
-                    
-                    Button("Next") {
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            selectedLesson = min(selectedLesson + 1, practiceVM.lessons.count - 1)
-                        }
-                    }
-                }
                 Spacer()
             }
             .padding()
         }
     }
+    
+    //MARK: - Progress Bar
+
+    var progressView: some View {
+        ProgressView(value: Double(practiceVM.selectedLesson), total: Double(practiceVM.lessons.count-1)) {
+            Text("Progress")
+        } currentValueLabel: {
+            Text("\(practiceVM.selectedLesson)/\(practiceVM.lessons.count-1)")
+        }
+            .padding()
+            .progressViewStyle(.linear)
+    }
+    
+    //MARK: - Swippeable Cards
+
+    func swippeableCards(geometry: GeometryProxy) -> some View {
+        TabView(selection: $practiceVM.selectedLesson) {
+            ForEach(0..<practiceVM.lessons.count, id: \.self) { lessonIndex in
+                CardView(lesson: practiceVM.lessons[lessonIndex])
+                    .tag(lessonIndex)
+                    .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .frame(height: geometry.size.height * 0.45)
+        .padding()
+    }
+    
+    //MARK: - Control Buttons
+
+    var controlButtons: some View {
+        HStack {
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    practiceVM.navigatePrevCard()
+                }
+            } label: {
+                Image(systemName: "arrow.left")
+                    .font(.system(size: 25))
+                    .frame(width: 100, height: 40)
+      
+            }
+            .buttonStyle(.bordered)
+            
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    practiceVM.navigateNextCard()
+                }
+            } label: {
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 25))
+                    .frame(width: 100, height: 40)
+            }
+            .buttonStyle(.bordered)
+        }
+    }
+    
 }
+
+//MARK: - CardView
 
 struct CardView: View {
     var lesson: Lesson
@@ -71,4 +104,3 @@ struct CardView: View {
         }
     }
 }
-
