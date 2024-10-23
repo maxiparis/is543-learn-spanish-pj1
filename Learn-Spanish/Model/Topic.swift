@@ -17,9 +17,10 @@ struct Topic: Identifiable, Codable {
     var lessonDescription: String
     var lessons: [Lesson]
     
-    struct Lesson: Identifiable, Codable {
-        var id: UUID = UUID()
-        let phraseInEnglish: String
-        let phraseInSpanish: String
-    }
+}
+
+struct Lesson: Identifiable, Codable {
+    var id: UUID = UUID()
+    let phraseInEnglish: String
+    let phraseInSpanish: String
 }

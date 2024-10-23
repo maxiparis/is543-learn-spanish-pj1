@@ -38,7 +38,7 @@ import Foundation
         model.topic.lessonDescription
     }
     
-    var lessons: [Topic.Lesson] {
+    var lessons: [Lesson] {
         model.topic.lessons
     }
     

@@ -8,5 +8,9 @@
 import Foundation
 
 @Observable class PracticeViewModel {
+    var lessons: [Lesson]
     
+    init(lessons: [Lesson]) {
+        self.lessons = lessons
+    }
 }

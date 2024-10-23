@@ -45,7 +45,7 @@ struct TopicIntroView: View {
     var startPracticeButton: some View {
         Section(header: Text("Practice makes perfect")) {
             NavigationLink {
-                PracticeView()
+                PracticeView(practiceVM: PracticeViewModel(lessons: topicIntroVM.lessons))
             } label: {
                 Label("Start Practice", systemImage: "book")
             }
@@ -99,10 +99,10 @@ struct TopicIntroView: View {
             topic:
                 Topic(title: "Basic", emoji: "⭐️", isShortLessonCompleted: false, isPracticeCompleted: false, lessonDescription: "Start with the basics! In Spanish, 'Hola' means 'Hello,' and 'Adiós' means 'Goodbye.'",
                       lessons: [
-                        Topic.Lesson(phraseInEnglish: "Hello", phraseInSpanish: "Hola"),
-                        Topic.Lesson(phraseInEnglish: "Goodbye", phraseInSpanish: "Adiós"),
-                        Topic.Lesson(phraseInEnglish: "Yes", phraseInSpanish: "Sí"),
-                        Topic.Lesson(phraseInEnglish: "No", phraseInSpanish: "No")
+                        Lesson(phraseInEnglish: "Hello", phraseInSpanish: "Hola"),
+                        Lesson(phraseInEnglish: "Goodbye", phraseInSpanish: "Adiós"),
+                        Lesson(phraseInEnglish: "Yes", phraseInSpanish: "Sí"),
+                        Lesson(phraseInEnglish: "No", phraseInSpanish: "No")
                       ])
         )
     )
