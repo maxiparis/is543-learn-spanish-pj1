@@ -13,6 +13,9 @@ import Foundation
     
     private var model: TopicIntroBrain
     
+    var topic: Topic {
+        model.topic
+    }
     var isLessonCompleted: Bool {
         get {
             model.topic.isShortLessonCompleted

@@ -21,7 +21,7 @@ struct QuizSession {
     
     private var persistenceManager = PersistenceManager.shared
     var topic: Topic
-    var questions: [QuizQuestion]
+    var questions: [QuizQuestion] = []
     var score: Int {
         //TODO
         0

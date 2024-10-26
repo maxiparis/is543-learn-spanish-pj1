@@ -11,7 +11,7 @@ struct PracticeView: View {
     
     //MARK: - Variables
 
-    @State var practiceVM : PracticeViewModel
+    @State var practiceVM: PracticeViewModel
     
     //MARK: - Body view
 

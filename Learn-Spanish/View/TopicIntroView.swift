@@ -63,7 +63,7 @@ struct TopicIntroView: View {
     var startQuizButton: some View {
         Section(header: Text("Are you ready for a challenge?")) {
             NavigationLink {
-                QuizView()
+                QuizView(quizVM: QuizViewModel(topic: topicIntroVM.topic))
             } label: {
                 Label("Start Quiz", systemImage: "applepencil.and.scribble")
             }

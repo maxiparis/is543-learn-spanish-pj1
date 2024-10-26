@@ -14,7 +14,15 @@ import Foundation
     var model: QuizSession
     var timer = Timer() //TODO: maybe another class for this?
     var questions: [QuizQuestion] { model.questions }
-    var currentQuestion: QuizQuestion? { model.currentQuestion }
+    var currentQuestion: QuizQuestion { model.currentQuestion }
+    var score: Int { model.score }
+    var questionsLeft: Int { model.questionsLeft } //TODO: maybe the vm can keep track of this instead of the model
+    var currentQuestionPrompt: String {
+        //TODO: maybe add more options
+        return """
+        True or False: The Spanish word for \"\(currentQuestion.wordInEnglish)\" is \"\(currentQuestion.prompt)\"?
+        """
+    }
     
     
     //MARK: - Init
