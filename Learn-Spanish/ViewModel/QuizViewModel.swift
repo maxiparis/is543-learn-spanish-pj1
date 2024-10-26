@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable class QuizViewModel {
     
     //MARK: - Variables
 
     var model: QuizSession
-    var timer = Timer() //TODO: maybe another class for this?
+    var timer = Timer()
     var questions: [QuizQuestion] { model.questions }
     var currentQuestion: QuizQuestion { model.currentQuestion }
     var score: Int { model.score }
@@ -23,7 +24,13 @@ import Foundation
         True or False: The Spanish word for \"\(currentQuestion.wordInEnglish)\" is \"\(currentQuestion.prompt)\"?
         """
     }
-    var secondsLeft: TimeInterval = 20
+    var secondsLeft: TimeInterval = 20 {
+        didSet {
+            if secondsLeft == 0 {
+                stopTimer()
+            }
+        }
+    }
     
     
     //MARK: - Init
@@ -31,18 +38,31 @@ import Foundation
     init(topic: Topic) {
         self.model = QuizSession(topic: topic)
     }
+    
+    func stopTimer() {
+        timer.invalidate()
+    }
+    
+    func startTimer() {
+        timer.invalidate()
+        secondsLeft = 20
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            withAnimation(.linear) {
+                self.secondsLeft -= 1
+            }
+        })
+    }
 
     //MARK: - User Intents
     
     func answerQuestionWith(_ answer: Bool) {
-        //TODO
-        model.validateAnswer(answer, seconds: 15)
+        stopTimer()
+        model.validateAnswer(answer, seconds: secondsLeft)
     }
     
     func advanceQuestions() {
         model.advanceCurrentQuestionIndex()
+        startTimer()
     }
-    
-
-    
 }

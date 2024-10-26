@@ -62,7 +62,7 @@ struct QuizSession {
         var totalScore = 10
         
         if seconds < Constants.maxNumberOfSeconds {
-            let timeScore = ceil((Constants.maxNumberOfSeconds - seconds) / 2.0) // `ceil` rounds up
+            let timeScore = ceil(seconds / 2) // `ceil` rounds up
             
             totalScore += Int(timeScore)
         }

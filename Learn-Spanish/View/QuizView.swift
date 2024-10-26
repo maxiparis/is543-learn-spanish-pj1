@@ -116,6 +116,9 @@ struct QuizView: View {
             }
             .padding()
         }
+        .onAppear {
+            quizVM.startTimer()
+        }
     }
 }
 
