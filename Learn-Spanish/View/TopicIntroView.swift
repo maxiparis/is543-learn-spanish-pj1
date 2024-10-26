@@ -11,6 +11,8 @@ struct TopicIntroView: View {
     
     @State var topicIntroVM : TopicIntroViewModel
     @State var presentQuizView: Bool = false
+    @State var presentPracticeView: Bool = false
+    
     
     //MARK: - Body view
 
@@ -23,6 +25,9 @@ struct TopicIntroView: View {
         }
         .navigationDestination(isPresented: $presentQuizView, destination: {
             QuizView(quizVM: QuizViewModel(topic: topicIntroVM.topic), isPresented: $presentQuizView)
+        })
+        .navigationDestination(isPresented: $presentPracticeView, destination: {
+            PracticeView(practiceVM: PracticeViewModel(lessons: topicIntroVM.lessons))
         })
         .navigationTitle(topicIntroVM.title)
         .onAppear {
@@ -51,8 +56,8 @@ struct TopicIntroView: View {
     
     var startPracticeButton: some View {
         Section(header: Text("Practice makes perfect")) {
-            NavigationLink {
-                PracticeView(practiceVM: PracticeViewModel(lessons: topicIntroVM.lessons))
+            Button {
+                presentPracticeView = true
             } label: {
                 Label("Start Practice", systemImage: "book")
             }
