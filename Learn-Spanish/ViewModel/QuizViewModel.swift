@@ -23,6 +23,7 @@ import Foundation
         True or False: The Spanish word for \"\(currentQuestion.wordInEnglish)\" is \"\(currentQuestion.prompt)\"?
         """
     }
+    var secondsLeft: TimeInterval = 20
     
     
     //MARK: - Init
@@ -35,6 +36,7 @@ import Foundation
     
     func answerQuestionWith(_ answer: Bool) {
         //TODO
+        model.validateAnswer(answer, seconds: 15)
     }
     
     func advanceQuestions() {

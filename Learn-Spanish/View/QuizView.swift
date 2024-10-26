@@ -41,11 +41,11 @@ struct QuizView: View {
                     .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
                     
                     VStack(spacing: 10) {
-                        ProgressView(value: 13, total: 20) //TODO
+                        ProgressView(value: quizVM.secondsLeft, total: 20)
                             .progressViewStyle(.linear)
                         HStack {
                             Spacer()
-                            Text("13")
+                            Text("\(Int(quizVM.secondsLeft))")
                         }
                     }
                     .padding()
@@ -53,42 +53,47 @@ struct QuizView: View {
                 
                 //MARK: - True/False Buttons
 
-                HStack(spacing: 15) {
+                HStack {
                     Group {
                         Button {
-//                            quizVM.answerQuestionWith(true)
-                            showNextQuestion.toggle()
+                            quizVM.answerQuestionWith(true)
                         } label: {
-                            Text("True")
-                                .font(.title2)
-                                .frame(width: 100, height: 40)
+                            HStack {
+                                Spacer()
+                                Text("True")
+                                    .font(.title2)
+                                    .frame( height: 40)
+                                Spacer()
+                            }
                         }
                         
                         Button {
                             quizVM.answerQuestionWith(false)
                         } label: {
-                            Text("False")
-                                .font(.title2)
-                                .frame(width: 100, height: 40)
+                            HStack {
+                                Spacer()
+                                Text("False")
+                                    .font(.title2)
+                                    .frame( height: 40)
+                                Spacer()
+                            }
                         }
                     }
-                    .padding()
                     .buttonStyle(.bordered)
-                    
+                    .disabled(quizVM.currentQuestion.hasBeenAnswered)
                 }
                 
-                //MARK: - Name of section
+                //MARK: - Correct / Incorrect Answer
 
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .foregroundStyle(quizVM.currentQuestion.isPromptCorrectAnswer ? Color.green : Color.red)
-                    Text("Correct")
+                        .foregroundStyle(quizVM.currentQuestion.isAnswerCorrect ?? false ? Color.green : Color.red)
+                    Text(quizVM.currentQuestion.isAnswerCorrect ?? false ? "Correct" : "Incorrect. In Spanish, it is \"\(quizVM.currentQuestion.wordInSpanish)\"")
                 }
                 .padding()
-//                .opacity(quizVM.currentQuestion.hasBeenAnswered ? 0 : 1)
+                .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0) //It will be hidden until the user answer
                 
-                
-                //MARK: - Next Questionk
+                //MARK: - Next Question
                 
                 Button {
                     //TODO: go to next question

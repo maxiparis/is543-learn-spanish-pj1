@@ -22,10 +22,7 @@ struct QuizSession {
     private var persistenceManager = PersistenceManager.shared
     var topic: Topic
     var questions: [QuizQuestion] = []
-    var score: Int {
-        //TODO
-        0
-    }
+    var score: Int = 0
     var currentQuestionIndex = 0
     var currentQuestion: QuizQuestion {
         questions[currentQuestionIndex]
@@ -44,6 +41,13 @@ struct QuizSession {
     
     //MARK: - Business Logic
     
+    mutating func validateAnswer(_ answer: Bool, seconds: TimeInterval) {
+        questions[currentQuestionIndex].answer = answer
+        if let answerCorrect = questions[currentQuestionIndex].isAnswerCorrect {
+            score += computeQuestionScore(seconds: seconds, wasCorrect: answerCorrect)
+        }
+    }
+    
     /// Calculates the score for a specific question
     func computeQuestionScore(seconds: TimeInterval, wasCorrect: Bool) -> Int {
         
@@ -52,7 +56,7 @@ struct QuizSession {
         var totalScore = 10
         
         if seconds < Constants.maxNumberOfSeconds {
-            var timeScore = ceil((Constants.maxNumberOfSeconds - seconds) / 2.0) // `ceil` rounds up
+            let timeScore = ceil((Constants.maxNumberOfSeconds - seconds) / 2.0) // `ceil` rounds up
             
             totalScore += Int(timeScore)
         }
@@ -65,7 +69,7 @@ struct QuizSession {
         // TODO
         var questions: [QuizQuestion] = []
         for lesson in topic.lessons {
-            var question = QuizQuestion(
+            let question = QuizQuestion(
                 wordInEnglish: lesson.phraseInEnglish,
                 wordInSpanish: lesson.phraseInSpanish,
                 prompt: randomizePrompt(correctWord: lesson.phraseInSpanish)
@@ -96,7 +100,14 @@ struct QuizQuestion {
     var wordInSpanish: String
     var prompt: String
     var isPromptCorrectAnswer: Bool
-    var hasBeenAnswered: Bool = false
+    var hasBeenAnswered: Bool {
+        answer != nil
+    }
+    var answer: Bool?
+    var isAnswerCorrect: Bool? {
+        guard hasBeenAnswered else { return nil }
+        return answer == isPromptCorrectAnswer
+    }
     
     init(wordInEnglish: String, wordInSpanish: String, prompt: String) {
         self.wordInEnglish = wordInEnglish
