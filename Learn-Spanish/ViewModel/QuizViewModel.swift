@@ -40,7 +40,7 @@ import Foundation
     }
     
     func advanceQuestions() {
-        //TODO
+        model.advanceCurrentQuestionIndex()
     }
     
 

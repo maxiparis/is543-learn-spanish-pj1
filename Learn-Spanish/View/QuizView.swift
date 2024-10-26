@@ -56,7 +56,9 @@ struct QuizView: View {
                 HStack {
                     Group {
                         Button {
-                            quizVM.answerQuestionWith(true)
+                            withAnimation {
+                                quizVM.answerQuestionWith(true)
+                            }
                         } label: {
                             HStack {
                                 Spacer()
@@ -68,7 +70,9 @@ struct QuizView: View {
                         }
                         
                         Button {
-                            quizVM.answerQuestionWith(false)
+                            withAnimation {
+                                quizVM.answerQuestionWith(false)
+                            }
                         } label: {
                             HStack {
                                 Spacer()
@@ -96,8 +100,9 @@ struct QuizView: View {
                 //MARK: - Next Question
                 
                 Button {
-                    //TODO: go to next question
-                    print("Next tapped!!")
+                    withAnimation {
+                        quizVM.advanceQuestions()
+                    }
                 } label: {
                     HStack {
                         Spacer()
@@ -106,8 +111,8 @@ struct QuizView: View {
                     }.frame(height: 40)
                 }
                 .buttonStyle(.borderedProminent)
-                .opacity(showNextQuestion ? 1 : 0)
-                .disabled(!showNextQuestion)
+                .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0)
+                .disabled(!quizVM.currentQuestion.hasBeenAnswered)
             }
             .padding()
         }

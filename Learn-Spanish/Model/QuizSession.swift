@@ -41,6 +41,12 @@ struct QuizSession {
     
     //MARK: - Business Logic
     
+    ///
+    mutating func advanceCurrentQuestionIndex() {
+        currentQuestionIndex = min(currentQuestionIndex + 1, questions.count - 1)
+    }
+    
+    /// Validates the answer and updates the score, does not move to next question automatically
     mutating func validateAnswer(_ answer: Bool, seconds: TimeInterval) {
         questions[currentQuestionIndex].answer = answer
         if let answerCorrect = questions[currentQuestionIndex].isAnswerCorrect {
