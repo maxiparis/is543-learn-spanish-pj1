@@ -41,6 +41,11 @@ class PersistenceManager {
         return nil
     }
     
+    func loadTopic(withID: UUID) -> Topic?{
+        let topicsArray = loadTopicsArray() ?? []
+        return topicsArray.first(where: { $0.id == withID })
+    }
+    
     func hasDataBeenLoaded() -> Bool {
         defaults.bool(forKey: keys.hasDataBeenSaved)
     }

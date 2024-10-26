@@ -60,6 +60,10 @@ import Foundation
     func setPracticeCompleted(_ isCompleted: Bool) {
         model.setPracticeCompleted(isCompleted)
     }
+    
     //MARK: - Helpers
-
+    
+    func loadTopic() {
+        model.loadTopicWithId(topic.id)
+    }
 }

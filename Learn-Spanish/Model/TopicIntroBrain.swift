@@ -16,6 +16,14 @@ struct TopicIntroBrain {
     
     //MARK: - Data Access
     
+    mutating func loadTopicWithId(_ id: UUID) {
+        if let topic = persistenceManager.loadTopic(withID: id) {
+            self.topic = topic
+            print("topic loaded correctly")
+            return
+        }
+        print("topic DID NOT load")
+    }
     
     //MARK: - Business Logic
     

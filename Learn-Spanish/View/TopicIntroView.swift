@@ -25,6 +25,9 @@ struct TopicIntroView: View {
             QuizView(quizVM: QuizViewModel(topic: topicIntroVM.topic), isPresented: $presentQuizView)
         })
         .navigationTitle(topicIntroVM.title)
+        .onAppear {
+            topicIntroVM.loadTopic()
+        }
     }
     
     //MARK: - Short Lesson View
@@ -69,15 +72,20 @@ struct TopicIntroView: View {
             Button {
                 presentQuizView = true
             } label: {
-                Label("Start Practice", systemImage: "book")
+                Label("Start Quiz", systemImage: "pencil")
             }
             HStack {
-                Text("Progress")
-                Spacer()
-                Text("[30%]")
+                Text("Highest Score")
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
-                //TODO: progress
+                Spacer()
+                Text("\(topicIntroVM.topic.quizHighScore)")
+                    .foregroundStyle(.secondary)
             }
+            
+            Text(topicIntroVM.topic.isQuizCompleted ? "Completed" : "Not Completed. Take quiz and pass all the words to complete.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
     }
     
