@@ -31,7 +31,7 @@ import SwiftUI
             }
         }
     }
-    
+    var currentQuestionIsLastOne: Bool { model.currentQuestionIsLastOne }
     
     //MARK: - Init
     
@@ -64,5 +64,11 @@ import SwiftUI
     func advanceQuestions() {
         model.advanceCurrentQuestionIndex()
         startTimer()
+    }
+    
+    func endSession() {
+        //persist: higher score
+        //persist: if completed or not
+        model.endSession()
     }
 }

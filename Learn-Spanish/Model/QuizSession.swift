@@ -28,7 +28,14 @@ struct QuizSession {
         questions[currentQuestionIndex]
     }
     var questionsLeft: Int {
-        questions.count - currentQuestionIndex //TODO: check if this is correct
+        questions.count - currentQuestionIndex - 1
+    }
+    var currentQuestionIsLastOne: Bool {
+        currentQuestionIndex == questions.count - 1
+    }
+    var allQuestionsWereAnsweredCorrectly: Bool {
+        let correctQuestions = questions.filter { $0.isAnswerCorrect ?? false }
+        return correctQuestions.count == questions.count
     }
     
     //MARK: - init
@@ -37,9 +44,29 @@ struct QuizSession {
         self.topic = topic
         self.questions = generateQuizQuestions()
     }
-
     
     //MARK: - Business Logic
+    
+    mutating func endSession() {
+        //update the highscore
+        var updated = false
+        
+        if score > topic.quizHighScore {
+            topic.quizHighScore = score
+            updated = true
+            print("New high score = \(score)")
+        }
+        
+        if allQuestionsWereAnsweredCorrectly {
+            topic.isQuizCompleted = true
+            updated = true
+            print("Quiz has been marked as completed")
+        }
+        
+        if updated {
+            persistenceManager.updateTopic(topic)
+        }
+    }
     
     ///
     mutating func advanceCurrentQuestionIndex() {

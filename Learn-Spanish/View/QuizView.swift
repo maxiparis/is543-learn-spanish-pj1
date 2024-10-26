@@ -11,7 +11,7 @@ struct QuizView: View {
     
     //MARK: - Variables
     @State var quizVM: QuizViewModel
-    @State var showNextQuestion: Bool = false
+    @Binding var isPresented: Bool
     
     //MARK: - Body
 
@@ -23,7 +23,7 @@ struct QuizView: View {
                 HStack {
                     Text("Score: \(quizVM.score)")
                     Spacer()
-                    Text("Questions left: \(quizVM.questionsLeft)")
+                    Text(quizVM.currentQuestionIsLastOne ? "This is the last question" : "Questions left: \(quizVM.questionsLeft)")
                 }
                 
                 //MARK: - Prompt card and timer
@@ -90,9 +90,11 @@ struct QuizView: View {
                 //MARK: - Correct / Incorrect Answer
 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundStyle(quizVM.currentQuestion.isAnswerCorrect ?? false ? Color.green : Color.red)
-                    Text(quizVM.currentQuestion.isAnswerCorrect ?? false ? "Correct" : "Incorrect. In Spanish, it is \"\(quizVM.currentQuestion.wordInSpanish)\"")
+                    if let isAnswerCorrect = quizVM.currentQuestion.isAnswerCorrect {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundStyle(isAnswerCorrect ? Color.green : Color.red)
+                        Text(isAnswerCorrect ? "Correct" : "Incorrect. In Spanish, it is \"\(quizVM.currentQuestion.wordInSpanish)\"")
+                    }
                 }
                 .padding()
                 .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0) //It will be hidden until the user answer
@@ -101,12 +103,17 @@ struct QuizView: View {
                 
                 Button {
                     withAnimation {
-                        quizVM.advanceQuestions()
+                        if quizVM.currentQuestionIsLastOne {
+                            quizVM.endSession()
+                            isPresented = false
+                        } else {
+                            quizVM.advanceQuestions()
+                        }
                     }
                 } label: {
                     HStack {
                         Spacer()
-                        Text("Next Question").font(.title2)
+                        Text(quizVM.currentQuestionIsLastOne ? "Finish" : "Next Question").font(.title2)
                         Spacer()
                     }.frame(height: 40)
                 }
@@ -123,14 +130,14 @@ struct QuizView: View {
 }
 
 
-
-#Preview {
-    QuizView(quizVM: QuizViewModel(topic:
-                Topic(title: "Greetings", emoji: "👋", isShortLessonCompleted: false, lessonDescription: "Spanish greetings vary by formality.",
-                      lessons: [
-            Lesson(phraseInEnglish: "Hi", phraseInSpanish: "Hola"),
-            Lesson(phraseInEnglish: "Good morning", phraseInSpanish: "Buenos días"),
-            Lesson(phraseInEnglish: "Good evening", phraseInSpanish: "Buenas noches"),
-            Lesson(phraseInEnglish: "Good afternoon", phraseInSpanish: "Buenas tardes")
-        ])))
-}
+//
+//#Preview {
+//    QuizView(quizVM: QuizViewModel(topic:
+//                Topic(title: "Greetings", emoji: "👋", isShortLessonCompleted: false, lessonDescription: "Spanish greetings vary by formality.",
+//                      lessons: [
+//            Lesson(phraseInEnglish: "Hi", phraseInSpanish: "Hola"),
+//            Lesson(phraseInEnglish: "Good morning", phraseInSpanish: "Buenos días"),
+//            Lesson(phraseInEnglish: "Good evening", phraseInSpanish: "Buenas noches"),
+//            Lesson(phraseInEnglish: "Good afternoon", phraseInSpanish: "Buenas tardes")
+//        ])))
+//}

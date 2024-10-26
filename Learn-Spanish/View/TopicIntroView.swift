@@ -10,6 +10,7 @@ import SwiftUI
 struct TopicIntroView: View {
     
     @State var topicIntroVM : TopicIntroViewModel
+    @State var presentQuizView: Bool = false
     
     //MARK: - Body view
 
@@ -20,6 +21,9 @@ struct TopicIntroView: View {
             startQuizButton
             wordsList
         }
+        .navigationDestination(isPresented: $presentQuizView, destination: {
+            QuizView(quizVM: QuizViewModel(topic: topicIntroVM.topic), isPresented: $presentQuizView)
+        })
         .navigationTitle(topicIntroVM.title)
     }
     
@@ -62,12 +66,11 @@ struct TopicIntroView: View {
     
     var startQuizButton: some View {
         Section(header: Text("Are you ready for a challenge?")) {
-            NavigationLink {
-                QuizView(quizVM: QuizViewModel(topic: topicIntroVM.topic))
+            Button {
+                presentQuizView = true
             } label: {
-                Label("Start Quiz", systemImage: "applepencil.and.scribble")
+                Label("Start Practice", systemImage: "book")
             }
-            
             HStack {
                 Text("Progress")
                 Spacer()
