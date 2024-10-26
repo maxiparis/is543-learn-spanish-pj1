@@ -14,6 +14,8 @@ struct Topic: Identifiable, Codable {
     var emoji: String
     var isShortLessonCompleted: Bool = false
     var isPracticeCompleted: Bool = false
+    var isQuizCompleted: Bool = false
+    var quizHighScore: Int = 0
     var lessonDescription: String
     var lessons: [Lesson]
     
