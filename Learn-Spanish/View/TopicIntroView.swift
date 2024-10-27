@@ -88,7 +88,7 @@ struct TopicIntroView: View {
                     .foregroundStyle(.secondary)
             }
             
-            Text(topicIntroVM.topic.isQuizCompleted ? "Completed" : "Not Completed. Take quiz and pass all the words to complete.")
+            Text(topicIntroVM.topic.isQuizCompleted ? "Completed ☑️" : "Not Completed. Take quiz and pass all the words to complete.")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -109,17 +109,17 @@ struct TopicIntroView: View {
     }
 }
 
-#Preview {
-    TopicIntroView(
-        topicIntroVM: TopicIntroViewModel(
-            topic:
-                Topic(title: "Basic", emoji: "⭐️", isShortLessonCompleted: false, isPracticeCompleted: false, lessonDescription: "Start with the basics! In Spanish, 'Hola' means 'Hello,' and 'Adiós' means 'Goodbye.'",
-                      lessons: [
-                        Lesson(phraseInEnglish: "Hello", phraseInSpanish: "Hola"),
-                        Lesson(phraseInEnglish: "Goodbye", phraseInSpanish: "Adiós"),
-                        Lesson(phraseInEnglish: "Yes", phraseInSpanish: "Sí"),
-                        Lesson(phraseInEnglish: "No", phraseInSpanish: "No")
-                      ])
-        )
-    )
-}
+//#Preview {
+//    TopicIntroView(
+//        topicIntroVM: TopicIntroViewModel(
+//            topic:
+//                Topic(title: "Basic", emoji: "⭐️", isShortLessonCompleted: false, isPracticeCompleted: false, lessonDescription: "Start with the basics! In Spanish, 'Hola' means 'Hello,' and 'Adiós' means 'Goodbye.'",
+//                      lessons: [
+//                        Lesson(phraseInEnglish: "Hello", phraseInSpanish: "Hola"),
+//                        Lesson(phraseInEnglish: "Goodbye", phraseInSpanish: "Adiós"),
+//                        Lesson(phraseInEnglish: "Yes", phraseInSpanish: "Sí"),
+//                        Lesson(phraseInEnglish: "No", phraseInSpanish: "No")
+//                      ])
+//        )
+//    )
+//}

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 import SwiftUI
 
 @Observable class QuizViewModel {
@@ -31,6 +32,7 @@ import SwiftUI
         }
     }
     var currentQuestionIsLastOne: Bool { model.currentQuestionIsLastOne }
+    var audioPlayer = AVAudioPlayer()
     
     //MARK: - Init
     
@@ -57,7 +59,10 @@ import SwiftUI
     
     func answerQuestionWith(_ answer: Bool) {
         stopTimer()
-        model.validateAnswer(answer, seconds: secondsLeft)
+        let answerWasCorrect = model.validateAnswer(answer, seconds: secondsLeft)
+        if let answerWasCorrect {
+            playSoundFor(answerWasCorrect)            
+        }
     }
     
     func advanceQuestions() {
@@ -68,4 +73,24 @@ import SwiftUI
     func endSession() {
         model.endSession()
     }
+    
+    //MARK: - Helpers
+    
+    
+    func playSoundFor(_ answerCorrect: Bool) {
+        let nameOfSound = answerCorrect ? "correctAnswer" : "incorrectAnswer"
+        
+        guard let url = Bundle.main.url(forResource: nameOfSound, withExtension: "mp3") else {
+            print("Sound file not found")
+            return
+        }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("Error playing sound: \(error)")
+        }
+    }
+
 }

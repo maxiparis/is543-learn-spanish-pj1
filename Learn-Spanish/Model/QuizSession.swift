@@ -73,12 +73,13 @@ struct QuizSession {
         currentQuestionIndex = min(currentQuestionIndex + 1, questions.count - 1)
     }
     
-    /// Validates the answer and updates the score, does not move to next question automatically
-    mutating func validateAnswer(_ answer: Bool, seconds: TimeInterval) {
+    /// Validates the answer and updates the score, does not move to next question automatically, returns if the answer was correct (true) or incorrect(false)
+    mutating func validateAnswer(_ answer: Bool, seconds: TimeInterval) -> Bool? {
         questions[currentQuestionIndex].answer = answer
         if let answerCorrect = questions[currentQuestionIndex].isAnswerCorrect {
             score += computeQuestionScore(seconds: seconds, wasCorrect: answerCorrect)
         }
+        return currentQuestion.isAnswerCorrect
     }
     
     /// Calculates the score for a specific question
