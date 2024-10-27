@@ -17,9 +17,8 @@ import SwiftUI
     var questions: [QuizQuestion] { model.questions }
     var currentQuestion: QuizQuestion { model.currentQuestion }
     var score: Int { model.score }
-    var questionsLeft: Int { model.questionsLeft } //TODO: maybe the vm can keep track of this instead of the model
+    var questionsLeft: Int { model.questionsLeft }
     var currentQuestionPrompt: String {
-        //TODO: maybe add more options
         return """
         True or False: The Spanish word for \"\(currentQuestion.wordInEnglish)\" is \"\(currentQuestion.prompt)\"?
         """
@@ -67,8 +66,6 @@ import SwiftUI
     }
     
     func endSession() {
-        //persist: higher score
-        //persist: if completed or not
         model.endSession()
     }
 }
