@@ -44,6 +44,10 @@ struct QuizView: View {
                         ProgressView(value: quizVM.secondsLeft, total: 20)
                             .progressViewStyle(.linear)
                         HStack {
+                            if quizVM.secondsLeft == 0 {
+                                Text("You lost your time bonus")
+                            }
+                            Text("")
                             Spacer()
                             Text("\(Int(quizVM.secondsLeft))")
                         }
