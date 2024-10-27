@@ -10,6 +10,7 @@ import SwiftUI
 struct TopicIntroView: View {
     
     @State var topicIntroVM : TopicIntroViewModel
+    var topicVM: TopicsViewModel
     @State var presentQuizView: Bool = false
     @State var presentPracticeView: Bool = false
     
@@ -32,6 +33,9 @@ struct TopicIntroView: View {
         .navigationTitle(topicIntroVM.title)
         .onAppear {
             topicIntroVM.loadTopic()
+        }
+        .onDisappear {
+            topicVM.loadData()
         }
     }
     

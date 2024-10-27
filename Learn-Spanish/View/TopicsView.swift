@@ -15,12 +15,13 @@ struct TopicsView: View {
         NavigationStack {
             List {
                 Section(header: Text("Choose a topic to learn about it")) {
-                    ForEach(topicsVM.topics) { topic in
+                    ForEach(0..<topicsVM.topics.count) { topicIndex in
                         NavigationLink {
-                            TopicIntroView(topicIntroVM: TopicIntroViewModel(topic: topic))
+                            TopicIntroView(topicIntroVM: TopicIntroViewModel(topic: topicsVM.topics[topicIndex]), topicVM: topicsVM)
                         } label: {
-                            Text("\(topic.emoji) \(topic.title)")
+                            Text("\(topicsVM.topics[topicIndex].emoji) \(topicsVM.topics[topicIndex].title)")
                         }
+                        .disabled(topicIndex == 0 ? false : !topicsVM.topics[previousIndex(topicIndex)].isEverythingCompleted)
                     }
                 }
                 
@@ -29,6 +30,10 @@ struct TopicsView: View {
                 }
             }.navigationTitle("Learn Spanish")
         }
+    }
+    
+    func previousIndex(_ index: Int) -> Int {
+        max(index - 1, 0)
     }
 }
 

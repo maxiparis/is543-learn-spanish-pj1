@@ -18,6 +18,9 @@ struct Topic: Identifiable, Codable {
     var quizHighScore: Int = 0
     var lessonDescription: String
     var lessons: [Lesson]
+    var isEverythingCompleted: Bool {
+        isShortLessonCompleted && isPracticeCompleted && isQuizCompleted
+    }
     
 }
 

@@ -23,5 +23,7 @@ import Foundation
         model.forceSavingData()
     }
 
-    
+    func loadData() {
+        model.loadData()
+    }
 }

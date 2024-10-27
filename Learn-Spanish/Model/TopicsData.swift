@@ -23,6 +23,15 @@ struct TopicsData {
         
     }
     
+    mutating func loadData() {
+        if let updatedTopics = persistenceManager.loadTopicsArray() {
+            self.topics = updatedTopics
+            print("Topics were updated for the TopicView")
+            return
+        }
+        print("Topics were NOT updated for the TopicView")
+    }
+    
     mutating func forceSavingData() {
 
         topics = [
@@ -52,7 +61,6 @@ struct TopicsData {
                       Lesson(phraseInEnglish: "How are you?", phraseInSpanish: "¿Cómo estás?"),
                       Lesson(phraseInEnglish: "Nice to meet you", phraseInSpanish: "Mucho gusto"),
                       Lesson(phraseInEnglish: "I’m fine", phraseInSpanish: "Estoy bien"),
-                      Lesson(phraseInEnglish: "Excuse me", phraseInSpanish: "Perdón"),
                       Lesson(phraseInEnglish: "I'm sorry", phraseInSpanish: "Lo siento")
                   ]),
             
