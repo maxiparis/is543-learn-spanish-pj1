@@ -100,11 +100,14 @@ struct CardView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor( showingEnglish ? .blue.opacity(0.5) : .green.opacity(0.5))
-            if showingEnglish {
-                Text(lesson.phraseInEnglish)
-            } else {
-                Text(lesson.phraseInSpanish)
+            Group {
+                if showingEnglish {
+                    Text(lesson.phraseInEnglish)
+                } else {
+                    Text(lesson.phraseInSpanish)
+                }
             }
+            .font(.title2)
 
         }
         .onTapGesture {

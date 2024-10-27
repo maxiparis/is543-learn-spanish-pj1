@@ -14,8 +14,8 @@ struct TopicsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(header: Text("Choose a topic to learn about it")) {
-                    ForEach(0..<topicsVM.topics.count) { topicIndex in
+                Section(header: Text("Choose a topic to learn about it"), footer: Text("Finish a lesson before unlocking the next one")) {
+                    ForEach(topicsVM.topics.indices, id: \.self) { topicIndex in
                         NavigationLink {
                             TopicIntroView(topicIntroVM: TopicIntroViewModel(topic: topicsVM.topics[topicIndex]), topicVM: topicsVM)
                         } label: {
