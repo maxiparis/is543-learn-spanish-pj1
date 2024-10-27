@@ -17,117 +17,120 @@ struct QuizView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 15) {
-                //MARK: - Score and Questions Left
-
-                HStack {
-                    Text("Highest Score: \(quizVM.highestScore)")
-                    Spacer()
-                    Text("Score: \(quizVM.score)")
-                    Spacer()
-                    Text(quizVM.currentQuestionIsLastOne ? "This is the last question" : "Questions left: \(quizVM.questionsLeft)")
-                }
-                
-                //MARK: - Prompt card and timer
-
-                VStack {
-                    ZStack(alignment: .center) {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundColor(.blue.opacity(0.5))
-                        Text(quizVM.currentQuestionPrompt)
-                            .padding(.horizontal, 30)
-                            .multilineTextAlignment(.center)
-                            .font(.title2)
-                    }
-                    .padding(.top, 25)
-                    .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
+            ScrollView {
+                VStack(spacing: 15) {
+                    //MARK: - Score and Questions Left
                     
-                    VStack(spacing: 10) {
-                        ProgressView(value: quizVM.secondsLeft, total: 20)
-                            .progressViewStyle(.linear)
-                        HStack {
-                            if quizVM.secondsLeft == 0 {
-                                Text("You lost your time bonus")
+                    HStack {
+                        Text("Highest Score: \(quizVM.highestScore)")
+                        Spacer()
+                        Text("Score: \(quizVM.score)")
+                        Spacer()
+                        Text(quizVM.currentQuestionIsLastOne ? "This is the last question" : "Questions left: \(quizVM.questionsLeft)")
+                    }
+                    
+                    //MARK: - Prompt card and timer
+                    
+                    VStack {
+                        ZStack(alignment: .center) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .foregroundColor(.blue.opacity(0.5))
+                            Text(quizVM.currentQuestionPrompt)
+                                .padding(.horizontal, 30)
+                                .multilineTextAlignment(.center)
+                                .font(.title2)
+                        }
+                        .padding(.top, 25)
+                        .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
+                        
+                        VStack(spacing: 10) {
+                            ProgressView(value: quizVM.secondsLeft, total: 20)
+                                .progressViewStyle(.linear)
+                            HStack {
+                                if quizVM.secondsLeft == 0 {
+                                    Text("You lost your time bonus")
+                                }
+                                Text("")
+                                Spacer()
+                                Text("\(Int(quizVM.secondsLeft))")
                             }
-                            Text("")
-                            Spacer()
-                            Text("\(Int(quizVM.secondsLeft))")
+                        }
+                        .padding()
+                    }
+                    
+                    //MARK: - True/False Buttons
+                    
+                    HStack {
+                        Group {
+                            Button {
+                                withAnimation {
+                                    quizVM.answerQuestionWith(true)
+                                }
+                            } label: {
+                                HStack {
+                                    Spacer()
+                                    Text("True")
+                                        .font(.title2)
+                                        .frame( height: 40)
+                                    Spacer()
+                                }
+                            }
+                            
+                            Button {
+                                withAnimation {
+                                    quizVM.answerQuestionWith(false)
+                                }
+                            } label: {
+                                HStack {
+                                    Spacer()
+                                    Text("False")
+                                        .font(.title2)
+                                        .frame( height: 40)
+                                    Spacer()
+                                }
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(quizVM.currentQuestion.hasBeenAnswered)
+                    }
+                    
+                    //MARK: - Correct / Incorrect Answer
+                    
+                    ZStack {
+                        if let isAnswerCorrect = quizVM.currentQuestion.isAnswerCorrect {
+                            RoundedRectangle(cornerRadius: 20)
+                                .foregroundStyle(isAnswerCorrect ? Color.green : Color.red)
+                                .frame(height: 80)
+                            Text(isAnswerCorrect ? "Correct" : "Incorrect. In Spanish, it is \"\(quizVM.currentQuestion.wordInSpanish)\"")
                         }
                     }
                     .padding()
-                }
-                
-                //MARK: - True/False Buttons
-
-                HStack {
-                    Group {
-                        Button {
-                            withAnimation {
-                                quizVM.answerQuestionWith(true)
-                            }
-                        } label: {
-                            HStack {
-                                Spacer()
-                                Text("True")
-                                    .font(.title2)
-                                    .frame( height: 40)
-                                Spacer()
+                    .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0) //It will be hidden until the user answer
+                    
+                    //MARK: - Next Question
+                    
+                    Button {
+                        withAnimation {
+                            if quizVM.currentQuestionIsLastOne {
+                                quizVM.endSession()
+                                isPresented = false
+                            } else {
+                                quizVM.advanceQuestions()
                             }
                         }
-                        
-                        Button {
-                            withAnimation {
-                                quizVM.answerQuestionWith(false)
-                            }
-                        } label: {
-                            HStack {
-                                Spacer()
-                                Text("False")
-                                    .font(.title2)
-                                    .frame( height: 40)
-                                Spacer()
-                            }
-                        }
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text(quizVM.currentQuestionIsLastOne ? "Finish" : "Next Question").font(.title2)
+                            Spacer()
+                        }.frame(height: 40)
                     }
-                    .buttonStyle(.bordered)
-                    .disabled(quizVM.currentQuestion.hasBeenAnswered)
-                }
-                
-                //MARK: - Correct / Incorrect Answer
-
-                ZStack {
-                    if let isAnswerCorrect = quizVM.currentQuestion.isAnswerCorrect {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(isAnswerCorrect ? Color.green : Color.red)
-                        Text(isAnswerCorrect ? "Correct" : "Incorrect. In Spanish, it is \"\(quizVM.currentQuestion.wordInSpanish)\"")
-                    }
+                    .buttonStyle(.borderedProminent)
+                    .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0)
+                    .disabled(!quizVM.currentQuestion.hasBeenAnswered)
                 }
                 .padding()
-                .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0) //It will be hidden until the user answer
-                
-                //MARK: - Next Question
-                
-                Button {
-                    withAnimation {
-                        if quizVM.currentQuestionIsLastOne {
-                            quizVM.endSession()
-                            isPresented = false
-                        } else {
-                            quizVM.advanceQuestions()
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text(quizVM.currentQuestionIsLastOne ? "Finish" : "Next Question").font(.title2)
-                        Spacer()
-                    }.frame(height: 40)
-                }
-                .buttonStyle(.borderedProminent)
-                .opacity(quizVM.currentQuestion.hasBeenAnswered ? 1 : 0)
-                .disabled(!quizVM.currentQuestion.hasBeenAnswered)
             }
-            .padding()
         }
         .onAppear {
             quizVM.startTimer()
