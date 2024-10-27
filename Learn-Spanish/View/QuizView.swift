@@ -21,6 +21,8 @@ struct QuizView: View {
                 //MARK: - Score and Questions Left
 
                 HStack {
+                    Text("Highest Score: \(quizVM.highestScore)")
+                    Spacer()
                     Text("Score: \(quizVM.score)")
                     Spacer()
                     Text(quizVM.currentQuestionIsLastOne ? "This is the last question" : "Questions left: \(quizVM.questionsLeft)")

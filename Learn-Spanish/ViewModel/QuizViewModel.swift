@@ -33,6 +33,9 @@ import SwiftUI
     }
     var currentQuestionIsLastOne: Bool { model.currentQuestionIsLastOne }
     var audioPlayer = AVAudioPlayer()
+    var highestScore: Int {
+        model.topic.quizHighScore
+    }
     
     //MARK: - Init
     
@@ -61,7 +64,7 @@ import SwiftUI
         stopTimer()
         let answerWasCorrect = model.validateAnswer(answer, seconds: secondsLeft)
         if let answerWasCorrect {
-            playSoundFor(answerWasCorrect)            
+            playSoundFor(answerWasCorrect)
         }
     }
     
