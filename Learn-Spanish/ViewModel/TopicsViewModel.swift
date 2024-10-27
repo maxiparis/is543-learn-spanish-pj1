@@ -8,11 +8,22 @@
 import Foundation
 
 @Observable class TopicsViewModel {
-    //reference to the model
-    private let model = TopicsData()
     
+    //MARK: - Variables
+
+    private var model = TopicsData()
+
     public var topics: [Topic] {
         model.topics
     }
     
+    //MARK: - User Intents
+    
+    func resaveDataToDefaults() {
+        model.forceSavingData()
+    }
+
+    func loadData() {
+        model.loadData()
+    }
 }
