@@ -1,6 +1,6 @@
 # Learn Spanish
 ![test](https://github.com/user-attachments/assets/54b60bdb-1173-4c79-afe2-7813d23e383b)
-![test2](https://github.com/user-attachments/assets/cc19abe0-56d7-4b05-aee8-393fc4af19f1)
+![test2](https://github.com/user-attachments/assets/63bbf390-7b85-40a0-a747-c95410b067e7)
 
 
 
