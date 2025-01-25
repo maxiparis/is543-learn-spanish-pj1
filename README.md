@@ -1,5 +1,7 @@
 # Learn Spanish
-![image](https://github.com/user-attachments/assets/10407c69-f28e-4747-b50c-7c5f2dd847e2)
+![test](https://github.com/user-attachments/assets/54b60bdb-1173-4c79-afe2-7813d23e383b)
+![test2](https://github.com/user-attachments/assets/cc19abe0-56d7-4b05-aee8-393fc4af19f1)
+
 
 
 ## ✅ Features:
