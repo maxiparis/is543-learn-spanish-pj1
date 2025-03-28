@@ -21,7 +21,9 @@ struct TopicsView: View {
                         } label: {
                             Text("\(topicsVM.topics[topicIndex].emoji) \(topicsVM.topics[topicIndex].title)")
                         }
-                        .disabled(topicIndex == 0 ? false : !topicsVM.topics[previousIndex(topicIndex)].isEverythingCompleted)
+//                        .disabled(topicIndex == 0 ? false : !topicsVM.topics[previousIndex(topicIndex)].isEverythingCompleted)
+                        //Comment out this line to enable all the topics at once
+                        
                     }
                 }
                 
